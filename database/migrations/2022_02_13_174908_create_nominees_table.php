@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('facebook')->nullable();
             $table->string('image');
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 
