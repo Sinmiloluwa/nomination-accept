@@ -53,7 +53,7 @@ class NomineeController extends Controller
             'image' => $imageName,
             'linkedIn' => $request->linkedin,
             'facebook' => $request->facebook,
-            'instagam' => $request->instagram,
+            'instagram' => $request->instagram,
             'years_of_experience' => $request->years_of_experience,
         ]);
 
