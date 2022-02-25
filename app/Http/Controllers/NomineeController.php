@@ -6,6 +6,7 @@ use Validator;
 use App\Models\Nominee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\Facades\Image;
 
 class NomineeController extends Controller
 {
@@ -33,13 +34,17 @@ class NomineeController extends Controller
                 'message' => 'Email already exists'
                 ]);
         }
-
+        $destination = "https://dev.techtrend.africa/images";
         $allowedExtension = ['jpeg','jpg','png'];
         $image = $request->image;
         $extension = $image->getClientOriginalExtension();
         $check = in_array($extension, $allowedExtension);
 
         if ($check) {
+            $img = Image::make($image->getRealPath());
+            $img->resize(100, 100, function ($constraint) {
+            $constraint->aspectRatio();
+        })->stream();
             $imageName = $image->getClientOriginalName();
             $image->move(public_path('/images'),$imageName);
         }
