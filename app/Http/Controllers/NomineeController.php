@@ -34,7 +34,6 @@ class NomineeController extends Controller
                 'message' => 'Email already exists'
                 ]);
         }
-        $destination = "https://dev.techtrend.africa/images";
         $allowedExtension = ['jpeg','jpg','png'];
         $image = $request->image;
         $extension = $image->getClientOriginalExtension();
@@ -46,7 +45,7 @@ class NomineeController extends Controller
             $constraint->aspectRatio();
         })->stream();
             $imageName = $image->getClientOriginalName();
-            $image->move(public_path('/images'),$imageName);
+            $uploadedFileUrl = Cloudinary::upload($request->file('file')->getRealPath())->getSecurePath();
         }
 
         DB::table('nominees')->insert([
